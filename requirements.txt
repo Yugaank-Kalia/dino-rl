@@ -1,0 +1,11 @@
+stable-baselines3[extra]
+gymnasium
+opencv-python
+mss
+pyautogui
+numpy
+torch
+pillow
+webdriver-manager
+selenium
+tqdm
