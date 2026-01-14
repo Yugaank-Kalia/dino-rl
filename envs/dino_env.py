@@ -27,16 +27,22 @@ class DinoEnv(gym.Env):
         )
         self.is_ducking = False
 
-        with open(config_path, 'r') as f:
-            cfg = json.load(f)
-        self.url = cfg.get('url', 'http://localhost:8000')
+        # --- NEW: Open the local HTML file directly ---
+        html_file_path = '/Users/yugaank/Desktop/dino-rl/game/index.html'
+
+        # Create a "file://" URL
+        file_url = f'file:///{html_file_path}'
+
+        print(f"✅ Bypassing server. Loading game from: {file_url}")
 
         chrome_options = Options()
-        chrome_options.add_argument('--window-size=800,400')
+        chrome_options.add_argument('--window-size=1200,600')
         chrome_options.add_argument('--disable-application-cache')
         chrome_options.add_argument('--disk-cache-size=0')
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
-        self.driver.get(self.url)
+        
+        # Load the game using the file URL
+        self.driver.get(file_url)
         time.sleep(1.0)
         self.body = self.driver.find_element(By.TAG_NAME, 'body')
 
